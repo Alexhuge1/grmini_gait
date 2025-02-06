@@ -1,0 +1,45 @@
+{
+  "os":  "Linux-5.15.0-130-generic-x86_64-with-glibc2.17",
+  "python":  "CPython 3.8.20",
+  "startedAt":  "2025-02-06T08:39:48.413995Z",
+  "args":  [
+    "--task=humanoid_ppo"
+  ],
+  "program":  "train.py",
+  "codePath":  "humanoid/scripts/train.py",
+  "git":  {
+    "remote":  "https://github.com/roboterax/humanoid-gym.git",
+    "commit":  "ae46e201c85a2b17e7f2cea59a441dae7ea88a8f"
+  },
+  "email":  "2200958879@qq.com",
+  "root":  "/home/alexhuge/Documents/GitHub/grmini_gait/humanoid-gym/humanoid/scripts",
+  "host":  "alexbotmini4090d",
+  "executable":  "/home/alexhuge/anaconda3/envs/grmini/bin/python",
+  "codePathLocal":  "train.py",
+  "cpu_count":  6,
+  "cpu_count_logical":  12,
+  "gpu":  "NVIDIA GeForce RTX 4090 D",
+  "gpu_count":  1,
+  "disk":  {
+    "/":  {
+      "total":  "135084904448",
+      "used":  "32426745856"
+    }
+  },
+  "memory":  {
+    "total":  "33467781120"
+  },
+  "cpu":  {
+    "count":  6,
+    "countLogical":  12
+  },
+  "gpu_nvidia":  [
+    {
+      "name":  "NVIDIA GeForce RTX 4090 D",
+      "memoryTotal":  "25757220864",
+      "cudaCores":  14592,
+      "architecture":  "Ada"
+    }
+  ],
+  "cudaVersion":  "12.2"
+}
