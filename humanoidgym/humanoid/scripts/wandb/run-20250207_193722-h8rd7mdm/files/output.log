@@ -1,0 +1,21 @@
+[34m[1mwandb[0m: [33mWARNING[0m Found log directory outside of given root_logdir, dropping given root_logdir for event file in /home/alexhuge/Documents/GitHub/grmini_gait/humanoidgym/logs/grmini/Feb07_19-37-17_
+Traceback (most recent call last):
+  File "train.py", line 43, in <module>
+    train(args)
+  File "train.py", line 39, in train
+    ppo_runner.learn(num_learning_iterations=train_cfg.runner.max_iterations, init_at_random_ep_len=True)
+  File "/home/alexhuge/Documents/GitHub/grmini_gait/humanoidgym/humanoid/algo/ppo/on_policy_runner.py", line 130, in learn
+    obs, privileged_obs, rewards, dones, infos = self.env.step(actions)
+  File "/home/alexhuge/Documents/GitHub/grmini_gait/humanoidgym/humanoid/envs/custom/grmini_env.py", line 200, in step
+    return super().step(actions)
+  File "/home/alexhuge/Documents/GitHub/grmini_gait/humanoidgym/humanoid/envs/base/legged_robot.py", line 102, in step
+    self.post_physics_step()
+  File "/home/alexhuge/Documents/GitHub/grmini_gait/humanoidgym/humanoid/envs/base/legged_robot.py", line 144, in post_physics_step
+    self.reset_idx(env_ids)
+  File "/home/alexhuge/Documents/GitHub/grmini_gait/humanoidgym/humanoid/envs/custom/grmini_env.py", line 268, in reset_idx
+    super().reset_idx(env_ids)
+  File "/home/alexhuge/Documents/GitHub/grmini_gait/humanoidgym/humanoid/envs/base/legged_robot.py", line 185, in reset_idx
+    self._reset_root_states(env_ids)
+  File "/home/alexhuge/Documents/GitHub/grmini_gait/humanoidgym/humanoid/envs/base/legged_robot.py", line 388, in _reset_root_states
+    self.root_states[env_ids, :3] += self.env_origins[env_ids]
+KeyboardInterrupt

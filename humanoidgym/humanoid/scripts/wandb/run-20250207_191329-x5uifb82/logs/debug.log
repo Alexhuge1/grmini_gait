@@ -21,3 +21,4 @@ config: {'algorithm': {'clip_param': 0.2, 'desired_kl': 0.01, 'entropy_coef': 0.
 2025-02-07 19:13:29,885 INFO    MainThread:155320 [wandb_run.py:_redirect():2314] Redirects installed.
 2025-02-07 19:13:29,887 INFO    MainThread:155320 [wandb_init.py:init():916] run started, returning control to user process
 2025-02-07 19:13:29,887 INFO    MainThread:155320 [wandb_run.py:_tensorboard_callback():1436] tensorboard callback: /home/alexhuge/Documents/GitHub/grmini_gait/humanoidgym/logs/grmini/Feb07_19-13-27_, True
+2025-02-07 19:36:41,827 WARNING MsgRouterThr:155320 [router.py:message_loop():75] message_loop has been closed

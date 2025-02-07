@@ -3,7 +3,7 @@
 <!-- 01142025-alpha-1 -->
 
 <robot
-  name="T5mini一代URDF-6">
+  name="grmini">
   <link
     name="base_link">
     <inertial>

@@ -98,21 +98,21 @@ class grminiCfg(LeggedRobotCfg):
             height_measurements = 0.1
 
     class init_state(LeggedRobotCfg.init_state):
-        pos = [0.0, 0.0, 0.89]
+        pos = [0.0, 0.0, 0.70]
 
         default_joint_angles = {  # = target angles [rad] when action = 0.0
-            'left_hip_pitch_joint': 0.1,
+            'left_hip_pitch_joint': -0.35,
             'left_hip_roll_joint': 0.,
-            'left_hip_yaw_joint': 0.,
-            'left_knee_pitch_joint': 0.,
+            'left_hip_yaw_joint': -0.,
+            'left_knee_pitch_joint': 0.7,
             'left_ankle_roll_joint': 0.,
-            'left_ankle_pitch_joint': 0.,
-            'right_hip_pitch_joint': 0.1,
-            'right_hip_roll_joint': 0.,
+            'left_ankle_pitch_joint': -0.35,
+            'right_hip_pitch_joint': 0.35,
+            'right_hip_roll_joint': -0.,
             'right_hip_yaw_joint': 0.,
-            'right_knee_pitch_joint': 0.,
+            'right_knee_pitch_joint': 0.7,
             'right_ankle_roll_joint': 0.,
-            'right_ankle_pitch_joint': 0.,
+            'right_ankle_pitch_joint': -0.35,
         }
 
     class control(LeggedRobotCfg.control):
@@ -199,7 +199,7 @@ class grminiCfg(LeggedRobotCfg):
             heading = [-3.14, 3.14]
 
     class rewards:
-        base_height_target = 0.8
+        base_height_target = 0.6
         min_dist = 0.2
         max_dist = 0.5
         # put some settings here for LLM parameter tuning

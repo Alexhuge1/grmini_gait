@@ -14,7 +14,7 @@ current_directory = os.getcwd()
 print("上层路径：", current_directory)
 
 # change path ??
-modelPath = '/home/alexhuge/Documents/GitHub/grmini_gait/humanoid-gym/resources/robots/grmini/urdf/' 
+modelPath = '/home/alexhuge/Documents/GitHub/grmini_gait/humanoidgym/resources/robots/grmini/meshes/' 
 
 URDF_FILENAME = "grmini.urdf"
 
@@ -43,7 +43,24 @@ lfFootPos0 = rdata.oMf[lfId].translation
 
 comRef = pinocchio.centerOfMass(rmodel, rdata, q0)
 
-initialAngle = np.array([-0.174,0,0,0.314,0.14,0,0.174,0,0,-0.314,-0.14,0])
+initialAngle = np.array([
+    # 左腿关节 (索引 0-5)
+    -0.35,   # left_hip_pitch_joint (-0.35 rad)
+    0.0,     # left_hip_roll_joint
+    0.0,     # left_hip_yaw_joint
+    0.7,     # left_knee_pitch_joint (0.7 rad)
+    0.0,     # left_ankle_roll_joint
+    -0.35,   # left_ankle_pitch_joint (-0.35 rad)
+    
+    # 右腿关节 (索引 6-11)
+    -0.35,     # right_hip_pitch_joint (0.1 rad)
+    -0.,   # right_hip_roll_joint (-0.35 rad)
+    0.0,     # right_hip_yaw_joint
+    0.7,    # right_knee_pitch_joint (0.74 rad)
+    0.0,     # right_ankle_roll_joint
+    -0.35     # right_ankle_pitch_joint (0.35 rad)
+])
+
 q0 = pinocchio.utils.zero(rrobot.model.nq)
 q0[6] = 1  # q.w
 q0[2] =0.76 # z
@@ -70,15 +87,15 @@ for i in range(100000):
     # left foot stance phase set to default joint pos
     if sin_pos_l > 0 :
         sin_pos_l = sin_pos_l * 0
-    ref_dof_pos[:, 0] = -sin_pos_l * scale_1 + initialAngle[0]
-    ref_dof_pos[:, 3] = sin_pos_l * scale_2 + initialAngle[3]
-    ref_dof_pos[:, 5] = -sin_pos_l * scale_1 + initialAngle[4]
+    ref_dof_pos[:, 0] = sin_pos_l * scale_1 + initialAngle[0]
+    ref_dof_pos[:, 3] = -sin_pos_l * scale_2 + initialAngle[3]
+    ref_dof_pos[:, 5] = sin_pos_l * scale_1 + initialAngle[5]
     # right foot stance phase set to default joint pos
     if sin_pos_r < 0:
         sin_pos_r = sin_pos_r * 0
     ref_dof_pos[:, 6] = -sin_pos_r * scale_1 + initialAngle[6]
     ref_dof_pos[:, 9] = sin_pos_r * scale_2 + initialAngle[9]
-    ref_dof_pos[:, 11] = -sin_pos_r * scale_1 + initialAngle[10]
+    ref_dof_pos[:, 11] = -sin_pos_r * scale_1 + initialAngle[11]
     # Double support phase
     ref_dof_pos[np.abs(sin_pos) < 0.1] = 0
 

@@ -129,13 +129,13 @@ class grminiFreeEnv(LeggedRobot):
         # left foot stance phase set to default joint pos
         sin_pos_l[sin_pos_l > 0] = 0
         self.ref_dof_pos[:, 0] = sin_pos_l * scale_1+ self.cfg.init_state.default_joint_angles['left_hip_pitch_joint']
-        self.ref_dof_pos[:, 3] = sin_pos_l * scale_2+ self.cfg.init_state.default_joint_angles['left_knee_pitch_joint']
+        self.ref_dof_pos[:, 3] = -sin_pos_l * scale_2+ self.cfg.init_state.default_joint_angles['left_knee_pitch_joint']
         self.ref_dof_pos[:, 5] = sin_pos_l * scale_1+ self.cfg.init_state.default_joint_angles['left_ankle_pitch_joint']
         # right foot stance phase set to default joint pos
         sin_pos_r[sin_pos_r < 0] = 0
-        self.ref_dof_pos[:, 6] = sin_pos_r * scale_1+ self.cfg.init_state.default_joint_angles['right_hip_pitch_joint']
+        self.ref_dof_pos[:, 6] = -sin_pos_r * scale_1+ self.cfg.init_state.default_joint_angles['right_hip_pitch_joint']
         self.ref_dof_pos[:, 9] = sin_pos_r * scale_2+ self.cfg.init_state.default_joint_angles['right_knee_pitch_joint']
-        self.ref_dof_pos[:, 11] = sin_pos_r * scale_1+ self.cfg.init_state.default_joint_angles['right_ankle_pitch_joint']
+        self.ref_dof_pos[:, 11] = -sin_pos_r * scale_1+ self.cfg.init_state.default_joint_angles['right_ankle_pitch_joint']
         # Double support phase
         self.ref_dof_pos[torch.abs(sin_pos) < 0.1] = 0
 
@@ -383,7 +383,7 @@ class grminiFreeEnv(LeggedRobot):
         stance_mask = self._get_gait_phase()
         measured_heights = torch.sum(self.rigid_state[:, self.feet_indices, 2] * stance_mask, dim=1) / torch.sum(stance_mask, dim=1)
         base_height = self.root_states[:, 2] - (measured_heights - 0.05)
-        print(measured_heights)
+        # print(measured_heights)
         return torch.exp(-torch.abs(base_height - self.cfg.rewards.base_height_target) * 100)
 
 
