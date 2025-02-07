@@ -58,8 +58,8 @@ class grminiCfg(LeggedRobotCfg):
         file = '{LEGGED_GYM_ROOT_DIR}/resources/robots/grmini/urdf/grmini.urdf'
 
         name = "grmini"
-        foot_name = "ankle_roll"
-        knee_name = "knee"
+        foot_name = "foot_roll_link"  
+        knee_name = "shank_pitch_link"
 
         terminate_after_contacts_on = ['base_link']
         penalize_contacts_on = ["base_link"]
