@@ -44,7 +44,7 @@ class grminiCfg(LeggedRobotCfg):
         single_num_privileged_obs = 73
         num_privileged_obs = int(c_frame_stack * single_num_privileged_obs)
         num_actions = 12
-        num_envs = 4096
+        num_envs = 1024
         episode_length_s = 24     # episode length in seconds
         use_ref_actions = False   # speed up training by using reference actions
 
@@ -107,7 +107,7 @@ class grminiCfg(LeggedRobotCfg):
             'left_knee_pitch_joint': 0.7,
             'left_ankle_roll_joint': 0.,
             'left_ankle_pitch_joint': -0.35,
-            'right_hip_pitch_joint': 0.35,
+            'right_hip_pitch_joint': -0.35,
             'right_hip_roll_joint': -0.,
             'right_hip_yaw_joint': 0.,
             'right_knee_pitch_joint': 0.7,
@@ -275,10 +275,10 @@ class grminiCfgPPO(LeggedRobotCfgPPO):
         policy_class_name = 'ActorCritic'
         algorithm_class_name = 'PPO'
         num_steps_per_env = 60  # per iteration
-        max_iterations = 3001  # number of policy updates
+        max_iterations = 12001  # number of policy updates
 
         # logging
-        save_interval = 100  # Please check for potential savings every `save_interval` iterations.
+        save_interval = 1000  # Please check for potential savings every `save_interval` iterations.
         experiment_name = 'grmini'
         run_name = ''
         # Load and resume
