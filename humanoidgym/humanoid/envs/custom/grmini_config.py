@@ -194,23 +194,23 @@ class grminiCfg(LeggedRobotCfg):
 
         class ranges:
             lin_vel_x = [-0.3, 0.6]   # min max [m/s]
-            lin_vel_y = [-0.3, 0.3]   # min max [m/s]
+            lin_vel_y = [-0.3, 0.6]   # min max [m/s]
             ang_vel_yaw = [-0.3, 0.3] # min max [rad/s]
             heading = [-3.14, 3.14]
 
     class rewards:
-        base_height_target = 0.6
+        base_height_target = 0.56
         min_dist = 0.2
         max_dist = 0.5
         # put some settings here for LLM parameter tuning
         target_joint_pos_scale = 0.25    # rad
-        target_feet_height = 0.12        # m
+        target_feet_height = 0.06       # m
         cycle_time = 0.64                # sec
         # if true negative total rewards are clipped at zero (avoids early termination problems)
         only_positive_rewards = True
         # tracking reward = exp(error*sigma)
         tracking_sigma = 5
-        max_contact_force = 200  # Forces above this value are penalized
+        max_contact_force = 500  # Forces above this value are penalized
 
         class scales:
             # reference motion tracking
@@ -218,7 +218,7 @@ class grminiCfg(LeggedRobotCfg):
             feet_clearance = 2.0
             feet_contact_number = 2.5
             # gait
-            feet_air_time = 2.5
+            feet_air_time = 3.5
             foot_slip = -0.12
             feet_distance = 0.2
             knee_distance = 0.2
@@ -232,7 +232,7 @@ class grminiCfg(LeggedRobotCfg):
             track_vel_hard = 0.5
             # base pos
             default_joint_pos = 0.35
-            orientation = 1.
+            orientation = 1.2
             base_height = 0.2
             base_acc = 0.2
             # energy
@@ -275,10 +275,10 @@ class grminiCfgPPO(LeggedRobotCfgPPO):
         policy_class_name = 'ActorCritic'
         algorithm_class_name = 'PPO'
         num_steps_per_env = 60  # per iteration
-        max_iterations = 12001  # number of policy updates
+        max_iterations = 3001  # number of policy updates
 
         # logging
-        save_interval = 1000  # Please check for potential savings every `save_interval` iterations.
+        save_interval = 100  # Please check for potential savings every `save_interval` iterations.
         experiment_name = 'grmini'
         run_name = ''
         # Load and resume
