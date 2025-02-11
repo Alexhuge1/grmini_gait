@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: BSD-3-Clause
-#
+# 
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are met:
 #
@@ -58,12 +58,12 @@ class grminiCfg(LeggedRobotCfg):
         file = '{LEGGED_GYM_ROOT_DIR}/resources/robots/grmini/urdf/grmini.urdf'
 
         name = "grmini"
-        foot_name = "foot_roll_link"  
+        foot_name = "foot_pitch_link"  
         knee_name = "shank_pitch_link"
 
         terminate_after_contacts_on = ['base_link']
         penalize_contacts_on = ["base_link"]
-        self_collisions = 1  # 1 to disable, 0 to enable...bitwise filter
+        self_collisions = 0  # 1 to disable, 0 to enable...bitwise filter
         flip_visual_attachments = False
         replace_cylinder_with_capsule = False
         fix_base_link = False
@@ -152,10 +152,10 @@ class grminiCfg(LeggedRobotCfg):
         # action scale: target angle = actionScale * action + defaultAngle
         action_scale = 0.25
         # decimation: Number of control action updates @ sim DT per policy DT
-        decimation = 10  # 100hz
+        decimation = 4  # 100hz
 
     class sim(LeggedRobotCfg.sim):
-        dt = 0.001  # 1000 Hz
+        dt = 0.005  # 1000 Hz
         substeps = 1
         up_axis = 1  # 0 is y, 1 is z
 
@@ -182,7 +182,7 @@ class grminiCfg(LeggedRobotCfg):
         push_interval_s = 4
         max_push_vel_xy = 0.2
         max_push_ang_vel = 0.4
-        # dynamic randomization
+        dynamic_randomization = 0.02
         action_delay = 0.5
         action_noise = 0.02
 
@@ -199,12 +199,14 @@ class grminiCfg(LeggedRobotCfg):
             heading = [-3.14, 3.14]
 
     class rewards:
-        base_height_target = 0.56
+        
+        base_height_target = 0.65
+        target_jump_height = 0.1
         min_dist = 0.2
         max_dist = 0.5
         # put some settings here for LLM parameter tuning
         target_joint_pos_scale = 0.25    # rad
-        target_feet_height = 0.06       # m
+        target_feet_height = 0.06        # m
         cycle_time = 0.64                # sec
         # if true negative total rewards are clipped at zero (avoids early termination problems)
         only_positive_rewards = True
@@ -213,9 +215,10 @@ class grminiCfg(LeggedRobotCfg):
         max_contact_force = 500  # Forces above this value are penalized
 
         class scales:
+            # single_leg_jump = 15
             # reference motion tracking
             joint_pos = 2.0
-            feet_clearance = 2.0
+            feet_clearance = 3
             feet_contact_number = 2.5
             # gait
             feet_air_time = 3.5
@@ -225,8 +228,8 @@ class grminiCfg(LeggedRobotCfg):
             # contact
             feet_contact_forces = -0.01
             # vel tracking
-            tracking_lin_vel = 1.4
-            tracking_ang_vel = 1.1
+            tracking_lin_vel = 1.6
+            tracking_ang_vel = 1.5
             vel_mismatch_exp = 0.5  # lin_z; ang x,y
             low_speed = 0.2
             track_vel_hard = 0.5
@@ -234,7 +237,7 @@ class grminiCfg(LeggedRobotCfg):
             default_joint_pos = 0.35
             orientation = 1.2
             base_height = 0.2
-            base_acc = 0.2
+            base_acc = 0.25
             # energy
             action_smoothness = -0.002
             torques = -1e-5

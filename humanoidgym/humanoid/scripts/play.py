@@ -43,11 +43,13 @@ from isaacgym.torch_utils import *
 import torch
 from tqdm import tqdm
 from datetime import datetime
+import sys
 
 
 def play(args):
+    # 环境配置
     env_cfg, train_cfg = task_registry.get_cfgs(name=args.task)
-    # override some parameters for testing
+   # 测试参数调整
     env_cfg.env.num_envs = min(env_cfg.env.num_envs, 1)
     env_cfg.sim.max_gpu_contact_pairs = 2**10
     # env_cfg.terrain.mesh_type = 'trimesh'
@@ -63,7 +65,7 @@ def play(args):
     env_cfg.noise.noise_level = 0.5
 
 
-    train_cfg.seed = 123145
+    train_cfg.seed = 3407
     print("train_cfg.runner_class_name:", train_cfg.runner_class_name)
 
     # prepare environment
@@ -82,6 +84,14 @@ def play(args):
         path = os.path.join(LEGGED_GYM_ROOT_DIR, 'logs', train_cfg.runner.experiment_name, 'exported', 'policies')
         export_policy_as_jit(ppo_runner.alg.actor_critic, path)
         print('Exported policy as jit script to: ', path)
+        import yaml
+        from humanoid.utils import class_to_dict
+        env_cfg.argv = sys.argv
+        env_cfg.dof_names = env.dof_names
+        with open(os.path.join(path, 'env_cfg.yaml'), 'w') as f:
+            f.write(yaml.dump(class_to_dict(env_cfg), sort_keys=False))
+        with open(os.path.join(path, 'train_cfg.yaml'), 'w') as f:
+            f.write(yaml.dump(class_to_dict(train_cfg), sort_keys=False))
 
     logger = Logger(env.dt)
     robot_index = 0 # which robot is used for logging

@@ -37,6 +37,7 @@ import torch
 from humanoid.envs import LeggedRobot
 
 from humanoid.utils.terrain import  HumanoidTerrain
+import collections
 
 
 class grminiFreeEnv(LeggedRobot):
@@ -61,7 +62,6 @@ class grminiFreeEnv(LeggedRobot):
         obs_buf (torch.Tensor): Tensor representing the observations buffer.
         obs_history (collections.deque): Deque containing the history of observations.
         critic_history (collections.deque): Deque containing the history of critic observations.
-
     Methods:
         _push_robots(): Randomly pushes the robots by setting a randomized base velocity.
         _get_phase(): Calculates the phase of the gait cycle.
@@ -79,6 +79,8 @@ class grminiFreeEnv(LeggedRobot):
         self.feet_height = torch.zeros((self.num_envs, 2), device=self.device)
         self.reset_idx(torch.tensor(range(self.num_envs), device=self.device))
         self.compute_observations()
+        self.jump_time = torch.zeros(self.num_envs, device=self.device)
+      
 
     def _push_robots(self):
         """ Random pushes the robots. Emulates an impulse by setting a randomized base velocity. 
@@ -126,23 +128,33 @@ class grminiFreeEnv(LeggedRobot):
         self.ref_dof_pos = torch.zeros_like(self.dof_pos)
         scale_1 = self.cfg.rewards.target_joint_pos_scale
         scale_2 = 2 * scale_1
-        # left foot stance phase set to default joint pos
+
+        # # 单脚跳跃逻辑
+        # 左脚跳跃
+        # sin_pos_l[sin_pos_l > 0] = 0
+        # self.ref_dof_pos[:, 0] = sin_pos_l * scale_1 + self.cfg.init_state.default_joint_angles['left_hip_pitch_joint']
+        # self.ref_dof_pos[:, 3] = -sin_pos_l * scale_2 + self.cfg.init_state.default_joint_angles['left_knee_pitch_joint']
+        # self.ref_dof_pos[:, 5] = sin_pos_l * scale_1 + self.cfg.init_state.default_joint_angles['left_ankle_pitch_joint']
+        # # 增加跳跃腿的关节扭矩
+        # self.ref_dof_pos[:, [0, 3, 5]] += 0.1  # 调整扭矩大小
+
         sin_pos_l[sin_pos_l > 0] = 0
-        self.ref_dof_pos[:, 0] = sin_pos_l * scale_1+ self.cfg.init_state.default_joint_angles['left_hip_pitch_joint']
-        self.ref_dof_pos[:, 3] = -sin_pos_l * scale_2+ self.cfg.init_state.default_joint_angles['left_knee_pitch_joint']
-        self.ref_dof_pos[:, 5] = sin_pos_l * scale_1+ self.cfg.init_state.default_joint_angles['left_ankle_pitch_joint']
-        # right foot stance phase set to default joint pos
+        self.ref_dof_pos[:, 0] = sin_pos_l * 0 + self.cfg.init_state.default_joint_angles['left_hip_pitch_joint']
+        self.ref_dof_pos[:, 3] = -sin_pos_l * 0 + self.cfg.init_state.default_joint_angles['left_knee_pitch_joint']
+        self.ref_dof_pos[:, 5] = sin_pos_l * 0 + self.cfg.init_state.default_joint_angles['left_ankle_pitch_joint']
+        # # 右脚保持站立
+        # sin_pos_r[sin_pos_r < 0] = 0
+        # self.ref_dof_pos[:, 6] = -sin_pos_r * scale_1 + self.cfg.init_state.default_joint_angles['right_hip_pitch_joint']
+        # self.ref_dof_pos[:, 9] = sin_pos_r * scale_2 + self.cfg.init_state.default_joint_angles['right_knee_pitch_joint']
+        # self.ref_dof_pos[:, 11] = -sin_pos_r * scale_1 + self.cfg.init_state.default_joint_angles['right_ankle_pitch_joint']
+        # 右脚保持站立
         sin_pos_r[sin_pos_r < 0] = 0
-        self.ref_dof_pos[:, 6] = -sin_pos_r * scale_1+ self.cfg.init_state.default_joint_angles['right_hip_pitch_joint']
-        self.ref_dof_pos[:, 9] = sin_pos_r * scale_2+ self.cfg.init_state.default_joint_angles['right_knee_pitch_joint']
-        self.ref_dof_pos[:, 11] = -sin_pos_r * scale_1+ self.cfg.init_state.default_joint_angles['right_ankle_pitch_joint']
-        # Double support phase
-        self.ref_dof_pos[torch.abs(sin_pos) < 0.1] = 0
-
+        self.ref_dof_pos[:, 6] = -0 * scale_1 + self.cfg.init_state.default_joint_angles['right_hip_pitch_joint']
+        self.ref_dof_pos[:, 9] = 0* scale_2 + self.cfg.init_state.default_joint_angles['right_knee_pitch_joint']
+        self.ref_dof_pos[:, 11] = -0 * scale_1 + self.cfg.init_state.default_joint_angles['right_ankle_pitch_joint']
+      
         self.ref_action = 2 * self.ref_dof_pos
-        self.ref_dof_pos += self.default_dof_pos
-
-
+        # self.ref_dof_pos += self.default_dof_pos
 
 
     def create_sim(self):
@@ -381,11 +393,10 @@ class grminiFreeEnv(LeggedRobot):
         of its feet when they are in contact with the ground.
         """
         stance_mask = self._get_gait_phase()
-        measured_heights = torch.sum(self.rigid_state[:, self.feet_indices, 2] * stance_mask, dim=1) / torch.sum(stance_mask, dim=1)
+        measured_heights = torch.sum(
+            self.rigid_state[:, self.feet_indices, 2] * stance_mask, dim=1) / torch.sum(stance_mask, dim=1)
         base_height = self.root_states[:, 2] - (measured_heights - 0.05)
-        # print(measured_heights)
         return torch.exp(-torch.abs(base_height - self.cfg.rewards.base_height_target) * 100)
-
 
     def _reward_base_acc(self):
         """
@@ -542,3 +553,40 @@ class grminiFreeEnv(LeggedRobot):
             self.actions + self.last_last_actions - 2 * self.last_actions), dim=1)
         term_3 = 0.05 * torch.sum(torch.abs(self.actions), dim=1)
         return term_1 + term_2 + term_3
+
+
+    # def _reward_single_leg_jump(self):
+    #     """
+    #     Calculates the reward for single left leg jump.
+    #     Encourages the robot to jump on the left leg with appropriate height and periodicity.
+    #     """
+    #     # 检查脚的接触情况
+    #     contact = self.contact_forces[:, self.feet_indices, 2] > 5.  # 脚与地面的接触力阈值
+    #     left_foot_contact = contact[:, 0]  # 假设左脚在 feet_indices 中的索引为 0
+    #     right_foot_not_contact = ~contact[:, 1]  # 假设右脚在 feet_indices 中的索引为 1
+    #     single_left_contact = left_foot_contact & right_foot_not_contact
+
+    #     # 获取左脚的 z 坐标
+    #     left_foot_z = self.rigid_state[:, self.feet_indices[0], 2] - 0.05  # 减去基准高度
+
+    #     # 计算跳跃高度
+    #     jump_height = left_foot_z
+    #     target_height = self.cfg.rewards.target_jump_height
+    #     height_reward = torch.exp(-torch.abs(jump_height - target_height) * 10)  # 奖励接近目标高度的跳跃
+
+    #     # 计算跳跃的周期性
+    #     # 记录每次跳跃的时间
+    #     self.jump_time += self.dt * single_left_contact
+    #     cycle_time = self.cfg.rewards.cycle_time
+    #     cycle_error = torch.abs(self.jump_time % cycle_time - cycle_time / 2)
+    #     cycle_reward = torch.exp(-cycle_error * 10)  # 奖励接近目标周期的跳跃
+
+    #     # 重置跳跃时间
+    #     self.jump_time[~single_left_contact] = 0
+
+    #     # 综合奖励
+    #     reward = single_left_contact * height_reward * cycle_reward
+
+    #     return reward
+
+

@@ -1,0 +1,18 @@
+{"time":"2025-02-09T21:40:41.631902668+08:00","level":"INFO","msg":"using version","core version":"0.19.1"}
+{"time":"2025-02-09T21:40:41.631909008+08:00","level":"INFO","msg":"created symlink","path":"/home/alexhuge/Documents/GitHub/grmini_gait/humanoidgym/humanoid/scripts/wandb/run-20250209_214041-asswkts3/logs/debug-core.log"}
+{"time":"2025-02-09T21:40:41.73523887+08:00","level":"INFO","msg":"created new stream","id":"asswkts3"}
+{"time":"2025-02-09T21:40:41.735289561+08:00","level":"INFO","msg":"stream: started","id":"asswkts3"}
+{"time":"2025-02-09T21:40:41.735419078+08:00","level":"INFO","msg":"writer: Do: started","stream_id":"asswkts3"}
+{"time":"2025-02-09T21:40:41.735513413+08:00","level":"INFO","msg":"handler: started","stream_id":"asswkts3"}
+{"time":"2025-02-09T21:40:41.735524735+08:00","level":"INFO","msg":"sender: started","stream_id":"asswkts3"}
+{"time":"2025-02-09T21:40:43.165406667+08:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-02-09T21:40:53.306638064+08:00","level":"INFO","msg":"tensorboard: no root directory after 10 seconds, using working directory"}
+{"time":"2025-02-09T21:40:53.306754938+08:00","level":"ERROR","msg":"tensorboard: file is not under TB root","rootDir":"/home/alexhuge/Documents/GitHub/grmini_gait/humanoidgym/humanoid/scripts","path":"/home/alexhuge/Documents/GitHub/grmini_gait/humanoidgym/logs/grmini/Feb09_21-40-39_/events.out.tfevents.1739108443.alexbotmini4090d.880977.0"}
+{"time":"2025-02-09T21:52:31.204685778+08:00","level":"INFO","msg":"stream: closing","id":"asswkts3"}
+{"time":"2025-02-09T21:52:31.204711208+08:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-02-09T21:52:31.205119222+08:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-02-09T21:52:37.879850314+08:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-02-09T21:52:39.160482106+08:00","level":"INFO","msg":"handler: closed","stream_id":"asswkts3"}
+{"time":"2025-02-09T21:52:39.160544947+08:00","level":"INFO","msg":"writer: Close: closed","stream_id":"asswkts3"}
+{"time":"2025-02-09T21:52:39.160583594+08:00","level":"INFO","msg":"sender: closed","stream_id":"asswkts3"}
+{"time":"2025-02-09T21:52:39.16063282+08:00","level":"INFO","msg":"stream: closed","id":"asswkts3"}

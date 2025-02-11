@@ -1,0 +1,38 @@
+algorithm:
+  clip_param: 0.2
+  desired_kl: 0.01
+  entropy_coef: 0.001
+  gamma: 0.994
+  lam: 0.9
+  learning_rate: 1.0e-05
+  max_grad_norm: 1.0
+  num_learning_epochs: 2
+  num_mini_batches: 4
+  schedule: adaptive
+  use_clipped_value_loss: true
+  value_loss_coef: 1.0
+init_member_classes: {}
+policy:
+  actor_hidden_dims:
+  - 512
+  - 256
+  - 128
+  critic_hidden_dims:
+  - 768
+  - 256
+  - 128
+  init_noise_std: 1.0
+runner:
+  algorithm_class_name: PPO
+  checkpoint: -1
+  experiment_name: grmini
+  load_run: -1
+  max_iterations: 3001
+  num_steps_per_env: 60
+  policy_class_name: ActorCritic
+  resume: true
+  resume_path: null
+  run_name: ''
+  save_interval: 100
+runner_class_name: OnPolicyRunner
+seed: 3407

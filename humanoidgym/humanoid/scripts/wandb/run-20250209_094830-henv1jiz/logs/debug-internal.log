@@ -1,0 +1,18 @@
+{"time":"2025-02-09T09:48:30.389908332+08:00","level":"INFO","msg":"using version","core version":"0.19.1"}
+{"time":"2025-02-09T09:48:30.389919683+08:00","level":"INFO","msg":"created symlink","path":"/home/alexhuge/Documents/GitHub/grmini_gait/humanoidgym/humanoid/scripts/wandb/run-20250209_094830-henv1jiz/logs/debug-core.log"}
+{"time":"2025-02-09T09:48:30.492339673+08:00","level":"INFO","msg":"created new stream","id":"henv1jiz"}
+{"time":"2025-02-09T09:48:30.492356605+08:00","level":"INFO","msg":"stream: started","id":"henv1jiz"}
+{"time":"2025-02-09T09:48:30.492464814+08:00","level":"INFO","msg":"writer: Do: started","stream_id":"henv1jiz"}
+{"time":"2025-02-09T09:48:30.492495647+08:00","level":"INFO","msg":"handler: started","stream_id":"henv1jiz"}
+{"time":"2025-02-09T09:48:30.49252091+08:00","level":"INFO","msg":"sender: started","stream_id":"henv1jiz"}
+{"time":"2025-02-09T09:48:31.860519558+08:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-02-09T09:48:41.966479841+08:00","level":"INFO","msg":"tensorboard: no root directory after 10 seconds, using working directory"}
+{"time":"2025-02-09T09:48:41.966719531+08:00","level":"ERROR","msg":"tensorboard: file is not under TB root","rootDir":"/home/alexhuge/Documents/GitHub/grmini_gait/humanoidgym/humanoid/scripts","path":"/home/alexhuge/Documents/GitHub/grmini_gait/humanoidgym/logs/grmini/Feb09_09-48-28_/events.out.tfevents.1739065711.alexbotmini4090d.8971.0"}
+{"time":"2025-02-09T11:32:16.519722295+08:00","level":"INFO","msg":"stream: closing","id":"henv1jiz"}
+{"time":"2025-02-09T11:32:16.519736571+08:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-02-09T11:32:16.520174776+08:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-02-09T11:32:22.90956152+08:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-02-09T11:32:24.431878406+08:00","level":"INFO","msg":"handler: closed","stream_id":"henv1jiz"}
+{"time":"2025-02-09T11:32:24.431954205+08:00","level":"INFO","msg":"writer: Close: closed","stream_id":"henv1jiz"}
+{"time":"2025-02-09T11:32:24.43198197+08:00","level":"INFO","msg":"sender: closed","stream_id":"henv1jiz"}
+{"time":"2025-02-09T11:32:24.432110689+08:00","level":"INFO","msg":"stream: closed","id":"henv1jiz"}

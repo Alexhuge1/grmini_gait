@@ -1,0 +1,10 @@
+{"time":"2025-02-08T11:49:09.325514111+08:00","level":"INFO","msg":"using version","core version":"0.19.1"}
+{"time":"2025-02-08T11:49:09.325520137+08:00","level":"INFO","msg":"created symlink","path":"/home/alexhuge/Documents/GitHub/grmini_gait/humanoidgym/humanoid/scripts/wandb/run-20250208_114909-3egoqay3/logs/debug-core.log"}
+{"time":"2025-02-08T11:49:09.430794786+08:00","level":"INFO","msg":"created new stream","id":"3egoqay3"}
+{"time":"2025-02-08T11:49:09.430841048+08:00","level":"INFO","msg":"stream: started","id":"3egoqay3"}
+{"time":"2025-02-08T11:49:09.431082848+08:00","level":"INFO","msg":"handler: started","stream_id":"3egoqay3"}
+{"time":"2025-02-08T11:49:09.432296612+08:00","level":"INFO","msg":"sender: started","stream_id":"3egoqay3"}
+{"time":"2025-02-08T11:49:09.43229711+08:00","level":"INFO","msg":"writer: Do: started","stream_id":"3egoqay3"}
+{"time":"2025-02-08T11:49:10.768912998+08:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-02-08T11:49:20.946150591+08:00","level":"INFO","msg":"tensorboard: no root directory after 10 seconds, using working directory"}
+{"time":"2025-02-08T11:49:20.946476811+08:00","level":"ERROR","msg":"tensorboard: file is not under TB root","rootDir":"/home/alexhuge/Documents/GitHub/grmini_gait/humanoidgym/humanoid/scripts","path":"/home/alexhuge/Documents/GitHub/grmini_gait/humanoidgym/logs/grmini/Feb08_11-49-07_/events.out.tfevents.1738986550.alexbotmini4090d.7202.0"}
